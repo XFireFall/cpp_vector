@@ -1,0 +1,62 @@
+  setting memory at [0x55f91fe18c20]: [  OK  ]
+	first free space:  1
+	last pointer position: 0
+	#| free | pointer
+	0: (-1) | 0x55f91fe18c20
+========================
+
+  setting memory at [0x55f91fe18c40]: [  OK  ]
+	first free space:  2
+	last pointer position: 1
+	#| free | pointer
+	0: (-1) | 0x55f91fe18c20
+	1: (-1) | 0x55f91fe18c40
+========================
+
+  setting memory at [0x55f91fe18c60]: [  OK  ]
+	first free space:  3
+	last pointer position: 2
+	#| free | pointer
+	0: (-1) | 0x55f91fe18c20
+	1: (-1) | 0x55f91fe18c40
+	2: (-1) | 0x55f91fe18c60
+========================
+
+ deleting memory at [0x55f91fe18c20]: [  OK  ]
+	first free space:  0
+	last pointer position: 2
+	#| free | pointer
+	0: ( 3) | 0x
+	1: (-1) | 0x55f91fe18c40
+	2: (-1) | 0x55f91fe18c60
+========================
+
+  setting memory at [0x55f91fe18c80]: [  OK  ]
+	first free space:  3
+	last pointer position: 2
+	#| free | pointer
+	0: (-1) | 0x55f91fe18c80
+	1: (-1) | 0x55f91fe18c40
+	2: (-1) | 0x55f91fe18c60
+========================
+
+ deleting memory at [0x55f91fe18c60]: [  OK  ]
+	first free space:  2
+	last pointer position: 1
+	#| free | pointer
+	0: (-1) | 0x55f91fe18c80
+	1: (-1) | 0x55f91fe18c40
+========================
+
+ deleting memory at [0x55f91fe18c40]: [  OK  ]
+	first free space:  1
+	last pointer position: 0
+	#| free | pointer
+	0: (-1) | 0x55f91fe18c80
+========================
+
+ deleting memory at [0x55f91fe18c80]: [  OK  ]
+	first free space:  0
+	last pointer position: -1
+========================
+
