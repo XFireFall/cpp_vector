@@ -25,14 +25,14 @@ void* operator new(size_t size, const char* filename, int linepos)
 
 void operator delete[](void* ptr)
 {
-    logAdd("delete", ptr, nullptr, 0);
+    logAdd("del", ptr, nullptr, 0);
     free(ptr);
     return;
 }
 
 void operator delete(void* ptr)
 {
-    logAdd("delete", ptr, nullptr, 0);
+    logAdd("del", ptr, nullptr, 0);
     free(ptr);
     return;
 }
@@ -45,7 +45,7 @@ void logAdd(const char* type, void* ptr, const char* filename, int linepos)
 {
     static int firstcall = 1;
     memlog = fopen("memlog.txt", (firstcall) ? "w" : "a");
-    fprintf(memlog, "%-6s:[%p]%s", type, ptr, (type[0] == 'd') ? "x" : " ");
+    fprintf(memlog, "%s:[%p]%s", type, ptr, (type[0] == 'd') ? "x" : " ");
     if(filename != nullptr)
         fprintf(memlog, " in \"%s\" line %d", filename, linepos);
     fprintf(memlog, "\n");
