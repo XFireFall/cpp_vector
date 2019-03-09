@@ -1,0 +1,26 @@
+new:[0x55b434223c20]  in "/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp" line 71
+new:[0x55b434223c40]  in "/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp" line 71
+new:[0x55b434223c60]  in "/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp" line 96
+del:[0x55b434223c20]x
+new:[0x55b434223c20]  in "/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp" line 71
+del:[0x55b434223c60]x
+new:[0x55b434223c60]  in "/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp" line 96
+del:[0x55b434223c20]x
+new:[0x55b434223c80]  in "/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp" line 71
+del:[0x55b434223c60]x
+new:[0x55b434223cb0]  in "/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp" line 77
+del:[0x55b434223c40]x
+new:[0x55b434223ce0]  in "/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp" line 96
+del:[0x55b434223cb0]x
+new:[0x55b434223cb0]  in "/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp" line 96
+del:[0x55b434223ce0]x
+new:[0x55b434223ce0]  in "/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp" line 96
+del:[0x55b434223cb0]x
+new:[0x55b434223c20]  in "/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp" line 96
+del:[0x55b434223ce0]x
+new:[0x55b434223cb0]  in "/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp" line 96
+del:[0x55b434223c20]x
+new:[0x55b434223c20]  in "/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp" line 96
+del:[0x55b434223cb0]x
+del:[0x55b434223c20]x
+del:[0x55b434223c80]x

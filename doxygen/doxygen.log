@@ -1,0 +1,5 @@
+warning: source ../lib/memcheck.hpp is not a readable file or directory... skipping.
+/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp:1: warning: the name `Vector' supplied as the second argument in the \file statement is not an input file
+/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp:15: warning: documented symbol `typedef int vector_t' was not declared or defined.
+/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp:45: warning: explicit link request to 'At' could not be resolved
+/home/oleg/code_blocks_projects/cpp_vector/lib/vector.hpp:45: warning: explicit link request to 'At' could not be resolved

@@ -1,3 +1,7 @@
+/// \file Simple and not-handy version of MemCheck for C++
+/// - works by "new" and "delete"
+/// - at least 2 calls needed for the whole root
+
 #ifndef MEMCHECK_HPP_INCLUDED
 #define MEMCHECK_HPP_INCLUDED
 
@@ -7,10 +11,12 @@
 
 #define MAX_LOG_SIZE (1000)
 
-static FILE* memlog;
+static FILE* memlog;    ///< File to write log into
 
 void logAdd(const char* type, void* ptr, const char* filename, int linepos);
 
+/// Redefinition of new[]
+///
 void* operator new[](size_t size, const char* filename, int linepos)
 {
     void* tmp = new char[size];
@@ -18,11 +24,15 @@ void* operator new[](size_t size, const char* filename, int linepos)
     return tmp;
 }
 
+/// Redefinition of new
+///
 void* operator new(size_t size, const char* filename, int linepos)
 {
     return new(filename, linepos) char[size];
 }
 
+/// Redefinition of delete[]
+///
 void operator delete[](void* ptr)
 {
     logAdd("del", ptr, nullptr, 0);
@@ -30,6 +40,8 @@ void operator delete[](void* ptr)
     return;
 }
 
+/// Redefinition of delete
+///
 void operator delete(void* ptr)
 {
     logAdd("del", ptr, nullptr, 0);
@@ -37,27 +49,47 @@ void operator delete(void* ptr)
     return;
 }
 
-#define new new(__FILE__, __LINE__)
+#define new new(__FILE__, __LINE__) ///< Some secret line
 
-typedef char spointer[13];
+typedef char spointer[13];          ///< \typedef Memory carrying string-written pointer
 
+
+/// Add new memory call to log
+///
+/// \param type const char*     - either "del" or "new" - the type of call
+/// \param ptr void*            - the position of memory that has been called
+/// \param filename const char* - the file where the call appeared
+/// \param linepos int          - the line in file where the call appeared
+///
 void logAdd(const char* type, void* ptr, const char* filename, int linepos)
 {
+    if(strcmp(type, "del") && strcmp(type, "new"))
+        return;
     static int firstcall = 1;
-    memlog = fopen("memlog.txt", (firstcall) ? "w" : "a");
+    memlog = fopen("memolog.txt", (firstcall) ? "w" : "a");
     fprintf(memlog, "%s:[%p]%s", type, ptr, (type[0] == 'd') ? "x" : " ");
     if(filename != nullptr)
         fprintf(memlog, " in \"%s\" line %d", filename, linepos);
     fprintf(memlog, "\n");
     fclose(memlog);
     firstcall = 0;
+    return;
 }
 
+/// Analyze the MemChick log information
+///
+/// \param filename const char* - input log file ("memolog.txt" by default)
+/// \return int - 0 if everything is OK; 1 - if memory calls were in a trouble; 2 - if there was no file with such name
+///
+///
 int logCheck(const char* filename)
 {
-    FILE* inlog = fopen((filename != nullptr) ? filename : "memlog.txt", "r");
+    int ferr = 0;
+    FILE* inlog = fopen((filename != nullptr) ? filename : "memolog.txt", "r");
+    if(!inlog)
+        return 2;
 
-    const char outfilename[] = "memloglog.txt";
+    const char outfilename[] = "memologolog.txt";
     FILE* outlog = fopen(outfilename, "w");
 
     spointer pointers[MAX_LOG_SIZE] = {};
@@ -101,7 +133,10 @@ int logCheck(const char* filename)
                         break;
                     }
                 if(!found)
+                {
                     fputs("[FAILED]: an attempt to delete not-existing data\n", outlog);
+                    ferr = 1;
+                }
                 else
                     fputs("[  OK  ]\n", outlog);
             }
@@ -116,7 +151,8 @@ int logCheck(const char* filename)
                 if(found)
                 {
                     fputs("[FAILED]: double-setting data in the same place\n", outlog);
-                    printf("memcheck: double-setting at [0x%s]\n", tmp);
+                    printf("MemChick: double-setting at [0x%s]\n", tmp);
+                    ferr = 1;
                 }
                 else
                     fputs("[  OK  ]\n", outlog);
@@ -149,14 +185,15 @@ int logCheck(const char* filename)
     if(last != -1)
     {
         fputs("ERROR: not-deleted memory left\n", outlog);
-        puts("memcheck: not-deleted memory left");
+        puts("MemChick: not-deleted memory left");
+        ferr = 1;
     }
 
-    printf("See %s for detailed information on memcheck work\n", outfilename);
+    printf("See %s for detailed information on MemChick work\n", outfilename);
 
     fclose(inlog);
     fclose(outlog);
-    return 1;
+    return ferr;
 }
 
 #endif // MEMCHECK_HPP_INCLUDED

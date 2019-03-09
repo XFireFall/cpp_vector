@@ -16,7 +16,7 @@ int main()
     a += c;
     a.Dump();
     c.Dump();
-c = a;
+    c = a;
     c.Push(42);
     c.Push(43);
     c.Dump();
@@ -34,6 +34,5 @@ c = a;
     c.Pop();
     c.Pop();
     c.Dump();
-    //c.~Vector();
     return 0;
 }

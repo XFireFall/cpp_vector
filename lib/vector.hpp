@@ -1,3 +1,6 @@
+/// \file Vector class description
+///
+
 #ifndef VECTOR_HPP_INCLUDED
 #define VECTOR_HPP_INCLUDED
 
@@ -5,44 +8,51 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "memcheck.hpp"
+#include "memchick.hpp"
 
-#define MIN_SIZE (1)
+#define MIN_SIZE (1)    ///< Minimum of the Vector::size_
 
-typedef int vector_t;
+typedef int vector_t;   ///< \typedef Vector item type
 
 //***********************************************************************************
 //***********************************************************************************
 //***********************************************************************************
 
+/// \class Vector
+/// Vector class with basic functions
+///
 class Vector
 {
 private:
-    int capacity_;
-    int size_;
-    vector_t* data_;
-
-private:
-    void Expand(int new_size);
-    void Shrink(int new_size);
+    int capacity_;  ///< Current size of memory allocated for the vector
+    int size_;      ///< Position of the furtherest vector item
+                    ///< The top of the stack if the vector was used the right way
+    vector_t* data_;///< The memory allocated for the vector
 
 public:
-    Vector();
-    Vector(int cap);
-    Vector(const Vector& that);
-    ~Vector();
+    Vector();                   ///< Basic constructor, making an empty vector
+    Vector(int cap);            ///< Makes a vector of the given capacity
+    Vector(const Vector& that); ///< Makes a copy of the given vector
+   ~Vector();                   ///< Basic destructor
 
-    const Vector& operator=(const Vector& that);
-    const Vector& operator+=(const Vector& that);
+    const Vector& operator=(const Vector& that);    ///< Replaces the vector with the given one
+    const Vector& operator+=(const Vector& that);   ///< Adds the given vector to the current one
+                                                    ///< (The first item of the given vector will be right after the last item of the current one)
 
-    vector_t& At(int idx);
-    vector_t& operator[](int idx);
+    vector_t& At(int idx);          ///< Returns address of the item with the given displacement
+                                    ///< Expands the vector if the given index is too big
+                                    ///< The negative index will be convert into backward-index taken as many times as it's needed
+    vector_t& operator[](int idx);  ///< Calls ::At
 
-    void Dump();
-    void Clear();
-    void Push(const vector_t val);
-    void Pop();
-    void Swap(Vector& that);
+    void Dump();                    ///< Give detailed information on the current vector
+    void Clear();                   ///< Clear all data (setting it to 0)
+    void Push(const vector_t val);  ///< Add an item as the last one
+    void Pop();                     ///< Delete the last item if it exists
+    void Swap(Vector& that);        ///< Exchange entire data with the given vector
+
+private:
+    void Expand(int new_size);  ///< Expand to the given capacity
+    void Shrink(int new_size);  ///< Shrink to the given capacity
 };
 
 //***********************************************************************************
@@ -95,13 +105,7 @@ void Vector::Expand(int new_size)
 
 void Vector::Shrink(int new_size)
 {
-    vector_t* tmp = new vector_t[new_size];
-    for(int i = 0; i < size_; i++)
-        tmp[i] = data_[i];
-    delete[] data_;
-    data_ = tmp;
-
-    capacity_ = new_size;
+    Expand(new_size);
     return;
 }
 
@@ -193,7 +197,7 @@ void Vector::Pop()
     if(size_ > 0)
         size_--;
     if(MIN_SIZE <= 2 * size_ && 2 * size_ < capacity_)
-        Shrink(2 * size_);
+        Shrink(size_ * 2);
     return;
 }
 
